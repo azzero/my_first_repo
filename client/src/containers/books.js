@@ -1,4 +1,5 @@
 import React,{ Component } from "react";
+import {connect} from 'react-redux';
 import "./books.css";
 const axios = require('axios');
 var type1=[];
@@ -55,8 +56,16 @@ render(){
    
     return(
       
-        <div>
-           
+        <div className="col-md-4">
+           <ul>
+               {
+                   this.props.books.map((book)=>{
+                       return (
+                                <li key={book.id}>{book.name}</li>
+                            )
+                   })
+               }
+           </ul>
             
               <table>
                 <thead><tr><th>الحالة</th><th>النوع</th><th>الرقم</th></tr></thead>
@@ -107,4 +116,9 @@ render(){
     
 }
 }
-export default Books ;
+function mapStateToProps (state){
+    return {
+        books: state.books
+    }
+}
+export default connect(mapStateToProps)(Books) ;

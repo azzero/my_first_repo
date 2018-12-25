@@ -38,15 +38,27 @@ const app = express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-    app.get("/api/allbk",(req,res) =>
+app.get("/api/allbk",(req,res) =>
          {
          books.findAll({
              order:[Sequelize.col('type')]
          }).then((articles)=>{
           res.json(articles)
-              console.log("articles " ,articles)
         });
 })
+app.post("/api/updatebook/:bookId",(req,res) =>
+         {
+          const id = parseInt(req.params.bookId, 10);
+          const {book}=req.body;
+          books.update(
+           {status:book.status},
+           {where :{id:id}}
+          ).then(function(rowsUpdated){
+            res.json(rowsUpdated)
+          }).catch(function(error){
+            res.json(error)
+          })
+        });
 
 
 
