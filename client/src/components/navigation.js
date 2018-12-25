@@ -5,12 +5,14 @@ import {NavLink} from 'react-router-dom'
 
 
 const Navigation = ()=>{
-  return (<nav className="navbar navbar-dark bg-dark col-md-6 col-md-offset-3 ">
-  
+  return (
+  <div className="row">
+  <div className="form col-sm-10 ">
+    <nav className="navbar navbar-dark bg-dark">
           <NavLink className="navbar-brand" to="/"> الرئيسية </NavLink>
           <NavLink className="navbar-brand" to="/addbook"> أضف كتاب </NavLink>
-
           </nav>
-          );  
+    </div>
+   </div> );  
 }
 export default Navigation ;

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {allBook,updateBook} from '../actions/index'
 import { bindActionCreators } from 'redux'
 import ReactTable from 'react-table';
+import Addbook from './addbook'
 import "react-table/react-table.css"
 
  class BookList extends Component {
@@ -47,11 +48,11 @@ change(e){
                }else return true ;
              })
    return(
-          <select onChange={this.change} >
-          <option   key={this.props.books[cellInfo.index][cellInfo.column.id]} value={this.props.books[cellInfo.index][cellInfo.column.id]}>
+          <select onChange={this.change} className="form-control" >
+          <option  className=""  key={this.props.books[cellInfo.index][cellInfo.column.id]} value={this.props.books[cellInfo.index][cellInfo.column.id]}>
           {this.props.books[cellInfo.index][cellInfo.column.id]}
           </option>
-          {options.map((valeur)=><option key={valeur} value={valeur}>{valeur}</option>)}
+          {options.map((valeur)=><option  className="" key={valeur} value={valeur}>{valeur}</option>)}
       
          </select>
     )
@@ -97,8 +98,12 @@ change(e){
           },
           {
             Header:" أوامر",
+            filterable:false,
+            style:{
+              textAlign:"center"
+            },
             Cell:props=>{
-              return (<button onClick={()=>this.updateBook(props)} className="btn btn primary">تعديل</button>)
+              return (<button onClick={()=>this.updateBook(props)} className="btn btn-primary ">تعديل</button>)
             }
           }
         ]
@@ -122,27 +127,33 @@ change(e){
   renderUpdateStatus(){
     const status=this.props.updatedBook;
     if(  status===0 ){
-      return <span className="badge badge-success"> تم التعديل بنجاح</span>
+      return <div className="alert alert-success"> تم التعديل بنجاح</div>
     }
     if(status===1 ){
-      return  <span className="badge badge-danger">هناك خطأ ما إتصل بالمطور على الايميل التالي 
-      azzeddine.elatmani@gmail.com </span>
+      return  <div className="alert alert-danger">هناك خطأ ما إتصل بالمطور على الايميل التالي 
+      azzeddine.elatmani@gmail.com </div>
     }
-    return <span className="badge badge-success">نتمنى لك قضاء يوم جميل  </span>
+    return <div className="alert alert-info ">نتمنى لك قضاء يوم جميل  </div>
 
   }
 
 render(){
     return (
           <div className="container">
-
-                <div className="row">
-                <div className="col-sm-6">
+          <div className="row">
+             <Addbook/>
+          </div>
+          <div className="row justify-content-center">
+            <div className="col-4 response">{this.renderUpdateStatus()}</div>
+          </div>
+          
+          <div className="row">
+                <div className="col-sm-10">
               {
                 this.renderBooksList()
               }
-            </div>
-            <div className="col-sm-4">{this.renderUpdateStatus()}</div>
+          </div>
+           
             </div>
           </div>
           )
