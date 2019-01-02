@@ -1,26 +1,34 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
-import {allBook,updateBook} from '../actions/index'
+import {allBook,updateBook,deleteBook} from '../actions/index'
 import { bindActionCreators } from 'redux'
 import ReactTable from 'react-table';
 import Addbook from './addbook'
 import "react-table/react-table.css"
+import Popup from "reactjs-popup";
+ const optionsValue=['جديد','جاري','منتهي','مفتشية','مراجع','مغلق']
 
  class BookList extends Component {
   constructor(props){
     super(props)
-    this.state={value:''}
+    this.state={value:'',deleteStatus:''}
       this.renderEditable=this.renderEditable.bind(this)
       this.updateBook=this.updateBook.bind(this)
       this.renderUpdateStatus=this.renderUpdateStatus.bind(this)
       this.renderOptionsStatus=this.renderOptionsStatus.bind(this)
       this.change=this.change.bind(this)
+      this.popupFunction=this.popupFunction.bind(this)
+  }
+  popupFunction(){
+  return (<Popup trigger={<button> Trigger</button>} position="right center">
+    <div>Popup content here !!</div>
+  </Popup>)
   }
 
 //return editable cell 
   renderEditable(cellInfo) {
     return (
-      <div
+      <div className="form-control"
         style={{ backgroundColor: "#fafafa" }}
         contentEditable
         suppressContentEditableWarning
@@ -41,7 +49,6 @@ change(e){
 //return  options values 
   renderOptionsStatus(cellInfo){
           const cellValue=this.props.books[cellInfo.index][cellInfo.column.id];
-          const optionsValue=['value1','value2','value3']
           var options=optionsValue.filter((val)=>{
              if(val===cellValue){
               return false
@@ -69,8 +76,14 @@ change(e){
    updateBook(props){
      let book =props.original
      book.status = this.state.value
-    this.props.updateBook(props.original)
+    this.props.updateBook(book)
    }
+   
+//delete book 
+deleteBook(props){
+  let bookId =props.original.id
+ this.props.deleteBook(bookId)
+}
 
 
 //  afficher le tableau 
@@ -103,7 +116,8 @@ change(e){
               textAlign:"center"
             },
             Cell:props=>{
-              return (<button onClick={()=>this.updateBook(props)} className="btn btn-primary ">تعديل</button>)
+              return (<div><button onClick={()=>this.updateBook(props)} className=" btn btn-primary ">تعديل</button>   
+              <button onClick={()=>this.popupFunction()} className=" btn btn-danger btn_used ">حدف</button> </div>)
             }
           }
         ]
@@ -114,7 +128,14 @@ change(e){
                     data={books}
                     filterable
                     defaultPageSize={10}
-                    
+                    getTrProps={(state, rowInfo, column) => {
+                      const statu= rowInfo ? rowInfo.original.type :""
+                      return {
+                        style: {
+                          background: statu ==="أصفر" ? "#F5DA81": ""
+                        }
+                      };  
+                    }}
                      >
                       </ReactTable>
                     )
@@ -148,7 +169,7 @@ render(){
           </div>
           
           <div className="row">
-                <div className="col-sm-10">
+                <div className="cont border col-sm-10">
               {
                 this.renderBooksList()
               }
@@ -168,6 +189,6 @@ function mapStateToProps(state){
   }
 }
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({allBook,updateBook},dispatch)
+  return bindActionCreators({allBook,updateBook,deleteBook},dispatch)
 }
 export default connect(mapStateToProps,mapDispatchToProps)(BookList);

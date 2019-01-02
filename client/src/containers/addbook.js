@@ -1,7 +1,8 @@
 import React,{Component} from 'react' 
 import {bindActionCreators} from 'redux'
 import { connect } from "react-redux";
-import {reduxForm} from 'redux-form'
+import {Field,reduxForm} from 'redux-form'
+import {addbook} from '../actions/index'
 
 const formConfig={
   form:"createBookForm",
@@ -11,24 +12,41 @@ const formConfig={
 
  class Addbook extends Component {
    render(){
+     console.log(this.props)
+     const {handleSubmit}=this.props
   return (
-    <div className="form col-sm-10"><form action="">
+    <div className="cont col-sm-10 border ">
+    <form onSubmit={handleSubmit(this.createBook.bind(this))}>
         <div className="form-group">
         <label htmlFor=""> : الرقم </label>
-          <input className="form-control" name="number" value="" onChange="" type="text"/>
+        <Field  className="form-control" name="number" component="input" type="text" />
         </div>
         <div className="form-group">
         <label htmlFor=""> : نوع الكتاب </label>
-         <input className="form-control" name="type" value="" onChange="" type="text"/> 
+          <Field  className="form-control" name="type" component="input" type="text" />
         </div>
         <div className="form-group">
         <label htmlFor=""> : الحالة </label>
-          <input className="form-control" name="status" value="" onChange="" type="text"/>
+        <Field  className="form-control" name="status" component="select" type="text" >
+        <option key="open" value="جديد">جديد</option>
+        <option  key="closed" value="جاري">جاري</option>
+        <option key="verified"  value="منتهي"> منتههي</option>
+        <option key="مفتشية"  value="مفتشية"> مفتشية</option>
+        <option key="مراجع"  value="مراجع"> مراجع</option>
+        <option key="مغلق"  value="مغلق"> مغلق</option>
+        </Field>
         </div>
         <button className="btn btn-primary" type="submit"> ajouter </button>
     </form>
     </div>
   )
 }
+createBook(book){
+  this.props.addbook(book);
 }
-export default connect(null,null)(reduxForm(formConfig)(Addbook));
+} 
+function mapDispatchToProps(dispatch ) {
+  return(bindActionCreators({addbook},dispatch))
+  }
+
+export default connect(null,mapDispatchToProps)(reduxForm(formConfig)(Addbook));

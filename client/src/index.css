@@ -24,12 +24,12 @@ tr.type3{
   background-color: rgb(211, 69, 12);
   color : black
 }
-td.new{
-  background-color:
-}
-.form{
+
+.cont{
   margin-top: 10px;
   margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   text-align: right;
 }
 .response{
@@ -38,4 +38,8 @@ td.new{
   font-size: 20px;
   text-align: center;
   color: black
+}
+.btn_used{
+  margin-left: 10px
+  
 }

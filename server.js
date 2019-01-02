@@ -58,8 +58,33 @@ app.post("/api/updatebook/:bookId",(req,res) =>
           }).catch(function(error){
             res.json(error)
           })
-        });
+});
+app.post("/api/addbook/",(req,res) =>
+         {
+          const {book}=req.body;
+          
+          books.create(
+           book
+          )
+          .then(function(rowInsered){
+            res.json(rowInsered)
+          }).catch(function(error){
+            res.json(error)
+          })
+});
+app.delete("/api/deletebook/:id",(req,res)=>{
+  const bookId=parseInt(req.params.id, 10);
+  books.destroy({
+    where:{
+      id:bookId
+    }
+  }).then(function(response){
+     res.json(response)
+  }).catch(function(error){
+    res.json(error)
+  })
 
+})
 
 
 
