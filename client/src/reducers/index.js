@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {combineReducers} from 'redux';
 import booksReducer from './reducer_books'
 import bookUpdate from './update_book'

@@ -5,25 +5,20 @@ import { bindActionCreators } from 'redux'
 import ReactTable from 'react-table';
 import Addbook from './addbook'
 import "react-table/react-table.css"
-import Popup from "reactjs-popup";
  const optionsValue=['جديد','جاري','منتهي','مفتشية','مراجع','مغلق']
 
  class BookList extends Component {
   constructor(props){
     super(props)
-    this.state={value:'',deleteStatus:''}
+    this.state={value:''}
       this.renderEditable=this.renderEditable.bind(this)
       this.updateBook=this.updateBook.bind(this)
       this.renderUpdateStatus=this.renderUpdateStatus.bind(this)
       this.renderOptionsStatus=this.renderOptionsStatus.bind(this)
       this.change=this.change.bind(this)
-      this.popupFunction=this.popupFunction.bind(this)
+    
   }
-  popupFunction(){
-  return (<Popup trigger={<button> Trigger</button>} position="right center">
-    <div>Popup content here !!</div>
-  </Popup>)
-  }
+  
 
 //return editable cell 
   renderEditable(cellInfo) {
@@ -117,7 +112,7 @@ deleteBook(props){
             },
             Cell:props=>{
               return (<div><button onClick={()=>this.updateBook(props)} className=" btn btn-primary ">تعديل</button>   
-              <button onClick={()=>this.popupFunction()} className=" btn btn-danger btn_used ">حدف</button> </div>)
+              <button onClick={() => { if (window.confirm(' هل أنت متأكد من حدف هدا الكتاب .. غا شوف وكان?')) this.deleteBook(props)}} className=" btn btn-danger btn_used ">حدف</button> </div>)
             }
           }
         ]

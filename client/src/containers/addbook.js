@@ -12,7 +12,6 @@ const formConfig={
 
  class Addbook extends Component {
    render(){
-     console.log(this.props)
      const {handleSubmit}=this.props
   return (
     <div className="cont col-sm-10 border ">

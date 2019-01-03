@@ -85,6 +85,26 @@ app.delete("/api/deletebook/:id",(req,res)=>{
   })
 
 })
+//statistic counter
+app.get("/api/statistic",(req,res)=>{
+  let counter ={'kobad':[],'yellow':'0','lafla7a':'0','koclosed':0}
+  books.count({ group: 'type' ,attributes: ['type']}
+    ).then(c => {
+    counter.kobad=c
+    console.log('order :',c)
+    res.json(c)
+  })
+  books.count(  { where: {'type': 'القبض','status': 'مغلق'} }).then(c => {
+    counter.koclosed=c
+  })
+  books.count(  { where: {'type': 'أصفر'} }).then(c => {
+    counter.yellow=c
+  })  
+  books.count(  { where: {'type': 'قباض'} }).then(c => {
+    counter.lafla7a=c
+  })
+  
+})
 
 
 

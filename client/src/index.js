@@ -5,6 +5,8 @@ import Root from './routes';
 import thunk from 'redux-thunk'
 import * as serviceWorker from './serviceWorker';
 import reducer from './reducers/index'
+import 'bootstrap';
+
 import {createStore,applyMiddleware} from 'redux'
 const createStoreWithMiddleware=applyMiddleware(thunk)(createStore);
 const store =createStoreWithMiddleware(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()) ;
